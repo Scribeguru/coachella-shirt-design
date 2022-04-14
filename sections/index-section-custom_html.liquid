@@ -1,0 +1,42 @@
+{%- assign item = section.settings -%}
+<div class="container-indent{% unless item.topoffset %} no-margin{% endunless %}">
+  <div class="container{% if item.fullwidth %}-fluid{% endif %}">
+    {%- if item.data contains '[images]' -%}{% include 'portfolio-widget' value: item.data %}
+    {%- else -%}{{ item.data }}
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom Html",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "topoffset",
+      "label": "Top Offset",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "fullwidth",
+      "label": "Fullwidth Container",
+      "default": false
+    },
+    {
+      "type": "textarea",
+      "id": "data",
+      "label": "Content"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Html",
+      "category": "Simple Section",
+      "settings": {
+      }
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,428 @@
+<div class="{% if section.settings.top_offset == 'none' %}nomargin {% elsif section.settings.top_offset == 'small' %}tt-offset-small {% endif %}container-indent" data-sectionname="index_revolution">
+  <div class="container{% if section.settings.fullwidth %}-fluid{% endif %}">
+    <div{% if section.settings.fullwidth %} class="row"{% endif %}>
+      {%- if section.blocks.size > 0 -%}
+      <div class="slider-revolution{% unless settings.header_position %} revolution-default{% endunless %}" data-speed="{{ section.settings.delay_time }}"{% unless section.settings.img_fullscreen %} data-fullscreen="false" data-width="{{ section.settings.customwidthvalue }}" data-height="{{ section.settings.customheightvalue }}"{% endunless %}>
+        <div class="tp-banner-container">
+          <div class="tp-banner revolution" style="display: none;">
+            <ul>
+              {%- for block in section.blocks -%}
+              {%- if block.settings.image != blank -%}{%- assign img_url = block.settings.image | img_url: 'x1024' -%}
+              {%- else -%}{%- assign img_url = 'template_slider.png' | asset_url -%}
+              {%- endif -%}
+              <li data-thumb="{{ img_url }}" data-transition="fade" data-slotamount="1" data-masterspeed="1000" data-saveperformance="off"  data-title="Slide"{% if block.settings.show_item_button != 'yes' and block.settings.banner_link != blank %} data-link="{{ block.settings.banner_link }}"{% endif %}>
+                {%- if block.settings.show_customhtml == 'no' -%}
+
+                {%- if block.settings.show_video == "yes" -%}
+                <div class="tp-caption tp-fade fadeout fullscreenvideo"
+                     data-x="0"
+                     data-y="0"
+                     data-speed="600"
+                     data-start="0"
+                     data-easing="Power4.easeOut"
+                     data-endspeed="1500"
+                     data-endeasing="Power4.easeIn"
+                     data-autoplay="true"
+                     data-autoplayonlyfirsttime="false"
+                     data-nextslideatend="true"
+                     data-forceCover="1"
+                     data-dottedoverlay="twoxtwo"
+                     data-aspectratio="16:9">
+                  <video class="video-js vjs-default-skin" preload="none" poster='{{ img_url }}' data-setup="{}">
+                    <source src='{{ block.settings.video_url | replace: "http:", "" | replace: "https:", ""  }}' />
+                  </video>
+                </div>
+                <div class="tp-caption  tp-fade"
+                     data-x="right"
+                     data-y="bottom"
+                     data-voffset="-60"
+                     data-hoffset="-90"
+                     data-speed="600"
+                     data-start="900"
+                     data-easing="Power4.easeOut"
+                     data-endeasing="Power4.easeIn">
+                  <div class="video-play" preload="none">
+                    <a class="icon-f-29 btn-play" href="#"></a>
+                    <a class="icon-f-28 btn-pause" href="#"></a>
+                  </div>
+                </div>
+                {%- else -%}
+                <img src="{{ img_url }}" alt="{{ block.settings.image.alt }}" data-bgposition="center {{ block.settings.position }}" data-bgfit="cover" data-bgrepeat="no-repeat" >
+                {%- endif -%}
+
+                {%- capture infoposition -%}{%- if block.settings.infoposition == "value" -%}{{ block.settings.info_point }}{%- else -%}{{ block.settings.infoposition }}{%- endif -%}{%- endcapture -%}
+                {%- capture textaligment -%}{{ block.settings.textaligment }}{%- endcapture -%}
+                {%- capture ani -%}{%- if block.settings.infoposition == "value" -%}lfl{%- elsif block.settings.infoposition == "right" -%}lfr{%- else -%}lfb{%- endif -%}{%- endcapture -%}
+                {%- capture offset -%}{%- if block.settings.infoposition == "value" -%}0{%- elsif block.settings.infoposition == "right" -%}-{{ block.settings.info_point }}{%- else -%}0{%- endif -%}{%- endcapture -%}
+                {%- if block.settings.show_infoblock == 'yes' -%}
+                <div class="tp-caption tp-caption1 {{ ani }} stb text-{{ textaligment }}"
+                     data-x="{{ infoposition }}"
+                     data-y="center"
+                     data-hoffset="{{ offset }}"
+                     data-voffset="-20"
+                     data-speed="600"
+                     data-start="900"
+                     data-easing="Power4.easeOut"
+                     data-endeasing="Power4.easeIn">
+                  {% if block.settings.text1 != '' %}<div class="tp-caption1-wd-1" style="color:{{ block.settings.color_text1 }}">{{ block.settings.text1 }}</div>{% endif %}
+                  {% if block.settings.text2 != '' %}<div class="tp-caption1-wd-2" style="color:{{ block.settings.color_text2 }}">{{ block.settings.text2 }}</div>{% endif %}
+                  {% if block.settings.text3 != '' %}<div class="tp-caption1-wd-3" style="color:{{ block.settings.color_text3 }}">{{ block.settings.text3 }}</div>{% endif %}
+                  {% if block.settings.show_item_button == 'yes' %}
+                  {%- assign radius = '-moz-border-radius:' | append: section.settings.bg_round | append: 'px;' | append: '-webkit-border-radius:' | append: section.settings.bg_round | append: 'px;' | append: 'border-radius:' | append: section.settings.bg_round | append: 'px;' | append: '-khtml-border-radius:' | append: section.settings.bg_round | append: 'px;' %}
+                  <div class="tp-caption1-wd-4"><a href="{{ block.settings.banner_link }}" class="btn btn-xl fnt-we-500" style="color:{{ block.settings.color_textbase }}; background:{{ block.settings.color_bgbase }}; {{ radius }}" data-c="{{ block.settings.color_textbase }}" data-ac="{{ block.settings.color_textactive }}" data-bgc="{{ block.settings.color_bgbase }}" data-abgc="{{ block.settings.color_bgactive }}" data-hovercolors>{{ section.settings.button_title }}</a></div>
+                  {%- endif -%}
+                </div>
+                {%- endif -%}
+
+                {%- else -%}{{ block.settings.code }}
+                {%- endif -%}
+              </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        </div>
+      </div>
+      {%- else -%}
+      <span style="display: flex; justify-content: center;">This section doesn’t currently include any content. Add content to this section using the sidebar.</span>
+      {%- endif -%}
+	</div>
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Revolution Slider",
+  "class": "index-section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "[Slider Documantation](\/\/zulijani.com\/slider-revolution\/documentation\/documentation.html)"
+    },
+    {
+      "type": "select",
+      "id": "top_offset",
+      "label": "Top Offset",
+      "default": "none",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "normal",
+          "label": "Normal"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "fullwidth",
+      "label": "Fullwidth size",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_title",
+      "label": "Button Name",
+      "default": "SHOP NOW!"
+    },
+    {
+        "type":      "range",
+        "id":        "bg_round",
+        "min":       0,
+        "max":       50,
+        "step":      1,
+        "unit":      "px",
+        "label":     "Button roundness",
+        "default":   6
+    },
+    {
+      "type": "header",
+      "content": "Slider Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "img_fullscreen",
+      "label": "Fullscreen image size",
+      "default": true,
+	  "info": "Not work with static header"
+    },
+    {
+      "type": "paragraph",
+      "content": "Width and height work only in not fullscreen image size"
+    },
+    {
+      "type": "text",
+      "id": "customwidthvalue",
+      "label": "Image width. In pixel",
+      "default": "1180",
+	  "info": "Disable \"Fullscreen image size\""
+    },
+    {
+      "type": "text",
+      "id": "customheightvalue",
+      "label": "Image height. In pixel",
+      "default": "650",
+	  "info": "Disable \"Fullscreen image size\""
+    },
+    {
+      "type": "select",
+      "id": "delay_time",
+      "label": "Change slides every",
+      "options": [
+        { "value": "10000", "label": "10 seconds" },
+        { "value": "12000", "label": "12 seconds" },
+        { "value": "14000", "label": "14 seconds" },
+        { "value": "16000", "label": "16 seconds" },
+        { "value": "18000", "label": "18 seconds" },
+        { "value": "20000", "label": "20 seconds" },
+        { "value": "22000", "label": "22 seconds" },
+        { "value": "24000", "label": "24 seconds" },
+        { "value": "26000", "label": "26 seconds" },
+        { "value": "28000", "label": "28 seconds" },
+        { "value": "30000", "label": "30 seconds" }
+      ],
+      "default": "16000"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slider_list",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "banner_link",
+          "label": "Link",
+          "info": "Optional. If button hide and link set = image is link"
+        },
+        {
+          "type": "radio",
+          "id": "position",
+          "label": "Image Position",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+			{ "value": "right", "label": "Right" }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "header",
+          "content": "Video"
+        },
+        {
+          "type": "select",
+          "id": "show_video",
+          "label": "Show Video?",
+          "default": "no",
+          "options": [
+            {
+              "value": "no",
+              "label": "No"
+            },
+            {
+              "value": "yes",
+              "label": "Yes"
+            }
+          ]
+        },
+        {
+          "type": "textarea",
+          "id": "video_url",
+          "label": "Paste Video Url",
+		  "default": "\/\/cdn.shopify.com\/s\/files\/1\/0130\/5041\/3114\/files\/Video.mp4?7607761490217037888",
+		  "info": "Video type \"mp4\". Use IMAGE for the slide!"
+        },
+        {
+          "type": "header",
+          "content": "Info"
+        },
+        {
+          "type": "select",
+          "id": "show_infoblock",
+          "label": "Show Info?",
+          "default": "yes",
+          "options": [
+            {
+              "value": "no",
+              "label": "No"
+            },
+            {
+              "value": "yes",
+              "label": "Yes"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "show_item_button",
+          "label": "Show Button?",
+          "default": "yes",
+          "options": [
+            {
+              "value": "no",
+              "label": "No"
+            },
+            {
+              "value": "yes",
+              "label": "Yes"
+            }
+          ]
+		},
+        {
+          "type": "radio",
+          "id": "infoposition",
+          "label": "Info Position",
+          "options": [
+			{ "value": "value", "label": "Left" },
+            { "value": "center", "label": "Center" },
+			{ "value": "right", "label": "Right" }
+          ],
+          "default": "value"
+        },
+        {
+          "type": "radio",
+          "id": "textaligment",
+          "label": "Text Aligment",
+          "options": [
+			{ "value": "value", "label": "Left" },
+            { "value": "center", "label": "Center" },
+			{ "value": "right", "label": "Right" }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "text",
+          "id": "info_point",
+          "label": "Left and Rigth Offset, integer",
+		  "default": "351"
+        },
+        {
+          "type": "header",
+          "content": "Texts"
+        },
+        {
+          "type": "textarea",
+          "id": "text1",
+          "label": "Text 1",
+		  "default": "Ready To",
+		  "info": "Empty field delete text"
+        },
+        {
+          "type": "textarea",
+          "id": "text2",
+          "label": "Text 2",
+		  "default": "Use Unique<br>Demos",
+		  "info": "<br> = new string. Empty field delete text"
+        },
+        {
+          "type": "textarea",
+          "id": "text3",
+          "label": "Text 3",
+		  "default": "Optimized for speed, website that sells",
+		  "info": "<br> = new string. Empty field delete text"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "color_text1",
+          "label": "Text 1 Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "color_text2",
+          "label": "Text 2 Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "color_text3",
+          "label": "Text 3 Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "paragraph",
+          "content": "Button Colors"
+        },
+        {
+          "type": "color",
+          "id": "color_textbase",
+          "label": "Text Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "color_bgbase",
+          "label": "Background Color",
+          "default": "#2879fe"
+        },
+        {
+          "type": "color",
+          "id": "color_textactive",
+          "label": "Text Active Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "color_bgactive",
+          "label": "Background Active Color",
+          "default": "#2267d8"
+        },
+        {
+          "type": "header",
+          "content": "Custom Html"
+        },
+        {
+          "type": "paragraph",
+          "content": "Edit variables and content by [Documentation: Options](\/\/zulijani.com\/slider-revolution\/documentation\/documentation.html\/documentation.html#options). Create your custom information."
+        },
+        {
+          "type": "select",
+          "id": "show_customhtml",
+          "label": "Use Custom Html?",
+          "default": "no",
+          "options": [
+            {
+              "value": "no",
+              "label": "No"
+            },
+            {
+              "value": "yes",
+              "label": "Yes"
+            }
+          ]
+        },
+        {
+          "type": "textarea",
+          "id": "code",
+          "label": "Custom Html",
+          "info": "[Documentation: Options](http:\/\/zulijani.com\/slider-revolution\/documentation\/documentation.html)",
+		  "default": "<img src=\"\/\/cdn.shopify.com\/s\/files\/1\/0130\/5041\/3114\/files\/home1_01.png?v=1530224249\" alt=\"slide1\" data-bgposition=\"center center\" data-bgfit=\"cover\" data-bgrepeat=\"no-repeat\"><div class=\"tp-caption tp-caption1 lfb stb text-center\" data-x=\"center\" data-y=\"center\" data-hoffset=\"0\" data-voffset=\"-20\" data-speed=\"600\" data-start=\"900\" data-easing=\"Power4.easeOut\" data-endeasing=\"Power4.easeIn\">\n<div class=\"tp-caption1-wd-1\">Multipurpose<\/div>\n<div class=\"tp-caption1-wd-2\">Premium<br>Shopify Theme<\/div>\n<div class=\"tp-caption1-wd-3\">30 skins, powerful features, great support, exclusive offer<\/div>\n<div class=\"tp-caption1-wd-4\"><a href=\"#\" class=\"btn btn-xl\" data-text=\"SHOP NOW!\">SHOP NOW!<\/a><\/div>\n<\/div>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Revolution Slider",
+      "category": "Sliders"
+    }
+  ]
+}
+{% endschema %}
